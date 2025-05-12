@@ -5,12 +5,7 @@ import numpy as np
 import craft_text_detector
 
 craft = craft_text_detector.Craft(output_dir="cv2_output")
-def initialize_camera():
 
-    cap = cv2.VideoCapture(0)
-    if not cap.isOpened():
-        raise Exception("Could not open camera")
-    return cap
 
 def initialize_ocr():
 
@@ -56,32 +51,26 @@ def process_frame(frame, reader):
 
 def main():
     # Initialize camera and OCR
-    cap = initialize_camera()
-    reader = initialize_ocr()
-    
+    cap = cv2.imread('inputs/book.png')
+
     print("Text detection started. Press 'q' to quit.")
     
     try:
        
             # Capture frame
-            ret, frame = cap.read()
-            if not ret:
-                print("Failed to grab frame")
-                
-            
+                        
 
-            processed_frame = process_frame(frame, reader)
+            processed_frame = process_frame(cap,0 )
             
 
             cv2.imshow('Text Detection', processed_frame)
-            
-
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            cv2.waitKey(1)
+            while True:
                 pass
                 
     finally:
 
-        cap.release()
+        
         cv2.destroyAllWindows()
 
 if __name__ == "__main__":
